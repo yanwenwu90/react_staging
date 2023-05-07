@@ -14,14 +14,32 @@ export default class App extends Component {
     ],
   };
 
+  addTodo = (todoObj) => {
+    const { todos } = this.state;
+    const newTodos = [todoObj, ...todos];
+    this.setState({ todos: newTodos });
+  };
+
+  updateTodo = (id, done) => {
+    const { todos } = this.state;
+    const newTodos = todos.map((todoObj) => {
+      if (id === todoObj.id) {
+        return { ...todoObj, done };
+      } else {
+        return todoObj;
+      }
+    });
+    this.setState({ todos: newTodos });
+  };
+
   render() {
     const { todos } = this.state;
 
     return (
       <div className="todo-container">
         <div className="todo-wrap">
-          <Header />
-          <List todos={todos} />
+          <Header addTodo={this.addTodo} />
+          <List todos={todos} updateTodo={this.updateTodo} />
           <Footer />
         </div>
       </div>
