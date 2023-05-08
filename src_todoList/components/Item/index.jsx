@@ -13,6 +13,11 @@ export default class Item extends Component {
       this.props.updateTodo(id, event.target.checked);
     };
   };
+  handleDelete = (id) => {
+    if (window.confirm("确定删除吗？")) {
+      this.props.deleteTodo(id);
+    }
+  };
   render() {
     const { id, name, done } = this.props;
     const { mouse } = this.state;
@@ -25,7 +30,7 @@ export default class Item extends Component {
         <label>
           <input
             type="checkbox"
-            defaultChecked={done}
+            checked={done}
             onChange={this.handleCheck(id)}
           />
           <span>{name}</span>
@@ -33,6 +38,9 @@ export default class Item extends Component {
         <button
           className="btn btn-danger"
           style={{ display: mouse ? "block" : "none" }}
+          onClick={() => {
+            this.handleDelete(id);
+          }}
         >
           删除
         </button>
