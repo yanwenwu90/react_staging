@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PubSub from "pubsub-js";
 import axios from "axios";
 
 export default class Search extends Component {
@@ -7,17 +6,18 @@ export default class Search extends Component {
     const {
       keyElement: { value: keyWord },
     } = this;
-    PubSub.publish("yanwenwu", { isFirst: false, isLoading: true });
+
+    this.props.updateAppState({ isFirst: false, isLoading: true });
     // 发送网络请求
     axios.get(`https://api.github.com/search/users?q=${keyWord}`).then(
       (response) => {
-        PubSub.publish("yanwenwu", {
+        this.props.updateAppState({
           users: response.data.items,
           isLoading: false,
         });
       },
       (error) => {
-        PubSub.publish("yanwenwu", {
+        this.props.updateAppState({
           err: error.message,
           isLoading: false,
         });
