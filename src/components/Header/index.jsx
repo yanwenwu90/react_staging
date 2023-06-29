@@ -1,7 +1,18 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
-export default class Header extends Component {
+class Header extends Component {
+  back = () => {
+    this.props.history.goBack();
+  };
   render() {
-    return <h2>React Router Demo</h2>;
+    return (
+      <div className="page-headerS">
+        <h2>React Router Demo</h2>
+        <button onClick={this.back}>回退</button>
+      </div>
+    );
   }
 }
+
+export default withRouter(Header);
